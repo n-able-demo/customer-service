@@ -2,6 +2,8 @@ package com.example.log4j2sample.Controller;
 
 
 import com.example.log4j2sample.Log4jSampleApplication;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,36 +31,33 @@ public class CustomerController {
 
     private static final Logger logger = LogManager.getLogger(Log4jSampleApplication.class);
 
-/*    @GetMapping("/getAccountDetailsByAccountNo/{accountNo}")
+    @GetMapping("/getAccountDetailsByAccountNo/{accountNo}")
     public String getAccountDetails(@PathVariable String accountNo) {
-        String accountDetailsResponse = callAccountDetailsEndpoint(accountNo);
-        return accountDetailsResponse;
-    }*/
-@GetMapping("/getAccountDetailsByAccountNo/{accountNo}")
-public String getAccountDetails(@PathVariable String accountNo) {
-    environment.getProperty("BASEURL");
-    System.out.println("ENV 1-----------"+environment.getProperty("BASEURL"));
-    System.out.println("ENV 2-----------"+baseUrl);
-    String accountDetailsResponse = callAccountDetailsEndpointbyAccountNo(accountNo);
-    return accountDetailsResponse;
-}
+        String accountDetailsResponse = callAccountDetailsEndpointbyAccountNo(accountNo);
+       //return accountDetailsResponse;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Object jsonTree = objectMapper.readTree(accountDetailsResponse);
+            ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
+            String formattedJson = writer.writeValueAsString(jsonTree);
+            return formattedJson;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Data not found";
+        }
+    }
 
     private String callAccountDetailsEndpointbyAccountNo(String accountNo) {
 
         logger.info("callAccountDetailsEndpoint--" + accountNo);
-
         RestTemplate restTemplate = new RestTemplate();
-
-        // Define the base URL
-       // String baseUrl = "http://localhost:8990/bank/accounts";
-
-        // Create the URL with the accountNo as a query parameter
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/getAccountDetails/")
-                .queryParam("accountNo", accountNo);
+        // String baseUrl = "http://localhost:8990/bank/accounts";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/getAccountDetailsByNumber/")
+                .path(accountNo);
 
         ResponseEntity<String> response = restTemplate.exchange(
                 builder.toUriString(), HttpMethod.GET, null, String.class);
-
+        System.out.println("-------"+response.getStatusCode());
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();
         } else {
@@ -70,7 +69,6 @@ public String getAccountDetails(@PathVariable String accountNo) {
     private String callAccountDetailsEndpoint(String accountNo) {
         logger.info("Info log Inside Method");
         RestTemplate restTemplate = new RestTemplate();
-       // String baseUrl = "http://localhost:8990/bank/accounts";
         ResponseEntity<String> response = restTemplate.exchange(
                 baseUrl + "/getAccountDetails/", HttpMethod.GET, null, String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
@@ -80,7 +78,6 @@ public String getAccountDetails(@PathVariable String accountNo) {
             return "Error calling /getAccountDetails/ endpoint";
         }
     }
-
 
 
 }
