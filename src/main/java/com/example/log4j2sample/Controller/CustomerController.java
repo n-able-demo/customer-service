@@ -54,7 +54,7 @@ public class CustomerController {
         logger.info("baseUrl--" + baseUrl);
         RestTemplate restTemplate = new RestTemplate();
         // String baseUrl = "http://localhost:8990/bank/accounts";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/zzz/")
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/getAccountDetailsByNumber/")
                 .path(accountNo);
         logger.info("Full set URL--" + builder.toUriString());
         ResponseEntity<String> response = restTemplate.exchange(
