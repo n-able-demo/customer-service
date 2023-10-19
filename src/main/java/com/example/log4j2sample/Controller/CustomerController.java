@@ -50,6 +50,7 @@ public class CustomerController {
     private String callAccountDetailsEndpointbyAccountNo(String accountNo) {
 
         logger.info("callAccountDetailsEndpoint--" + accountNo);
+        logger.info("baseUrl--" + baseUrl);
         RestTemplate restTemplate = new RestTemplate();
         // String baseUrl = "http://localhost:8990/bank/accounts";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/getAccountDetailsByNumber/")
