@@ -33,6 +33,7 @@ public class CustomerController {
 
     @GetMapping("/getAccountDetailsByAccountNo/{accountNo}")
     public String getAccountDetails(@PathVariable String accountNo) {
+        logger.info("getAccountDetails--");
         String accountDetailsResponse = callAccountDetailsEndpointbyAccountNo(accountNo);
        //return accountDetailsResponse;
         try {
@@ -53,9 +54,9 @@ public class CustomerController {
         logger.info("baseUrl--" + baseUrl);
         RestTemplate restTemplate = new RestTemplate();
         // String baseUrl = "http://localhost:8990/bank/accounts";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/getAccountDetailsByNumber/")
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/zzz/")
                 .path(accountNo);
-
+        logger.info("Full set URL--" + builder.toUriString());
         ResponseEntity<String> response = restTemplate.exchange(
                 builder.toUriString(), HttpMethod.GET, null, String.class);
         System.out.println("-------"+response.getStatusCode());
