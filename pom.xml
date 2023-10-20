@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example</groupId>
-	<artifactId>log4j2-sample_test</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>customer-service</artifactId>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>log4j2-demo</name>
-	<description>Demo project for Spring Boot Log 4j test</description>
+	<name>customer-service</name>
+	<description>Customer Service</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
