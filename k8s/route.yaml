@@ -2,7 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: customer-service
-  namespace: apps-demo
+  namespace: pipeline-demo
 spec:
   port:
     targetPort: 8080-tcp

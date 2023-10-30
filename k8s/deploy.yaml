@@ -4,7 +4,7 @@ metadata:
   labels:
     app: customer-service
   name: customer-service
-  namespace: apps-demo
+  namespace: pipeline-demo
 spec:
   replicas: 1
   selector:
@@ -23,8 +23,8 @@ spec:
       containers:
       - env:
         - name: BASEURL
-          value: https://bank-service-apps-demo.apps.daffy-03vn55qc.cloud.techzone.ibm.com/bank/accounts
-        image: image-registry.openshift-image-registry.svc:5000/apps-demo/customer-service:latest
+          value: https://bank-service-pipeline-demo.apps.daffy-03vn55qc.cloud.techzone.ibm.com/bank/accounts
+        image: image-registry.openshift-image-registry.svc:5000/pipeline-demo/customer-service:latest
         imagePullPolicy: Always
         name: customer-service
         ports:
