@@ -3,6 +3,8 @@ kind: Route
 metadata:
   name: customer-service
   namespace: pipeline-demo
+  labels:
+    app.kubernetes.io/part-of: bank-app
 spec:
   port:
     targetPort: 8080-tcp

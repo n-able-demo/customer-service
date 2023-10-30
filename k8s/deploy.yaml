@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: customer-service
+    app.kubernetes.io/part-of: bank-app
   name: customer-service
   namespace: pipeline-demo
 spec:
@@ -21,17 +22,17 @@ spec:
         app: customer-service
     spec:
       containers:
-      - env:
-        - name: BASEURL
-          value: https://bank-service-pipeline-demo.apps.daffy-03vn55qc.cloud.techzone.ibm.com/bank/accounts
-        image: image-registry.openshift-image-registry.svc:5000/pipeline-demo/customer-service:latest
-        imagePullPolicy: Always
-        name: customer-service
-        ports:
-        - containerPort: 8080
-          protocol: TCP
-        - containerPort: 8443
-          protocol: TCP
-        - containerPort: 8778
-          protocol: TCP
+        - env:
+            - name: BASEURL
+              value: https://bank-service-pipeline-demo.apps.daffy-03vn55qc.cloud.techzone.ibm.com/bank/accounts
+          image: image-registry.openshift-image-registry.svc:5000/pipeline-demo/customer-service:latest
+          imagePullPolicy: Always
+          name: customer-service
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 8778
+              protocol: TCP
       restartPolicy: Always
